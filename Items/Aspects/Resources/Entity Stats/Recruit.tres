@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://bhn7oqq7i0fb8"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_hisja"]
+
+[resource]
+script = ExtResource("1_hisja")
+name = "Recruit"
+variables = {
+"agility": 3.0,
+"armor": 100.0,
+"health": 1.0,
+"regen": 1.0,
+"speed": 3.0
+}

@@ -1,0 +1,162 @@
+[gd_scene load_steps=29 format=3 uid="uid://80sl0op531m3"]
+
+[ext_resource type="Script" path="res://Entity/entity.gd" id="1_wybt6"]
+[ext_resource type="Resource" uid="uid://da3bodvphnwrl" path="res://Items/Aspects/Resources/Entity Stats/Veteran.tres" id="2_baov2"]
+[ext_resource type="Script" path="res://Entity/Enemies/StateMachine.gd" id="2_wb8pt"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Veteran_State.gd" id="3_ndmsq"]
+[ext_resource type="Script" path="res://Entity/Enemies/enemy_hitbox.gd" id="4_dx2p6"]
+[ext_resource type="PackedScene" uid="uid://bkdoqjlh5e2wo" path="res://Entity/Enemies/Enemy Weapons/enemy_pistol.tscn" id="5_f1w3f"]
+[ext_resource type="Resource" uid="uid://4hm63enyyueh" path="res://Items/Aspects/Resources/Weapon Stats/VeteranGun.tres" id="5_unhuh"]
+[ext_resource type="Resource" uid="uid://di54jjw26sjvv" path="res://Items/Aspects/Resources/Enemy Aspects/VeteranVolley.tres" id="6_waltt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hx0k3"]
+radius = 0.719978
+height = 1.94241
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlr5d"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0f71"]
+shading_mode = 0
+disable_ambient_light = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgbok"]
+size = Vector3(0.99, 1.88653, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf5xe"]
+shading_mode = 0
+albedo_color = Color(0.678431, 0.486275, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_idnk2"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.985, 1, 0.505)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rhlpg"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.45, 0.59, 0.275)
+
+[sub_resource type="BoxMesh" id="BoxMesh_11hit"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.42, 0.42, 0.37)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s6sv8"]
+shading_mode = 0
+albedo_color = Color(0.27451, 0.188235, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y7l2n"]
+material = SubResource("StandardMaterial3D_s6sv8")
+size = Vector3(0.865, 0.085, 0.095)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1axu"]
+shading_mode = 0
+albedo_color = Color(0.27451, 0.188235, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_faict"]
+material = SubResource("StandardMaterial3D_v1axu")
+size = Vector3(0.085, 0.305, 0.095)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdpbe"]
+shading_mode = 0
+albedo_color = Color(0.27451, 0.188235, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sas7v"]
+material = SubResource("StandardMaterial3D_gdpbe")
+size = Vector3(0.085, 0.305, 0.095)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ye81l"]
+shading_mode = 0
+albedo_color = Color(0.329412, 0.121569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yfw3k"]
+material = SubResource("StandardMaterial3D_ye81l")
+size = Vector3(0.1, 0.235, 0.125)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5i8yp"]
+shading_mode = 0
+albedo_color = Color(0.403922, 0.403922, 0.403922, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ysx3c"]
+material = SubResource("StandardMaterial3D_5i8yp")
+size = Vector3(0.155, 0.15, 1.155)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ms6ov"]
+shading_mode = 0
+albedo_color = Color(0.329412, 0.121569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e3amv"]
+material = SubResource("StandardMaterial3D_ms6ov")
+size = Vector3(0.17, 0.13, 0.39)
+
+[node name="Veteran" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 35
+script = ExtResource("1_wybt6")
+base_stats = ExtResource("2_baov2")
+
+[node name="StateMachine2" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_wb8pt")
+initial_state = NodePath("Veteran_State")
+
+[node name="Veteran_State" type="Node" parent="StateMachine2" node_paths=PackedStringArray("weapon")]
+script = ExtResource("3_ndmsq")
+weapon = NodePath("../../EnemyPistol")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hx0k3")
+
+[node name="EnemyHitBox" type="Area3D" parent="." node_paths=PackedStringArray("entity", "mesh")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_dx2p6")
+entity = NodePath("..")
+flesh_material = SubResource("StandardMaterial3D_xlr5d")
+armor_material = SubResource("StandardMaterial3D_b0f71")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0146165, 0)
+shape = SubResource("BoxShape3D_dgbok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0683861, 0)
+mesh = SubResource("BoxMesh_idnk2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.673812, 0)
+mesh = SubResource("BoxMesh_rhlpg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.712344, 0)
+mesh = SubResource("BoxMesh_11hit")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.854824, 0)
+mesh = SubResource("BoxMesh_y7l2n")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.388418, 1.04537, -0.000279143)
+mesh = SubResource("BoxMesh_faict")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.388, 1.045, 0)
+mesh = SubResource("BoxMesh_sas7v")
+
+[node name="EnemyPistol" parent="." instance=ExtResource("5_f1w3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.553433, 0.297059, -1.07761)
+stats = ExtResource("5_unhuh")
+aspects = Array[Resource("res://Items/Aspects/Scripts/Aspects.gd")]([ExtResource("6_waltt")])
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyPistol"]
+transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, -0.173033, 0.987015)
+mesh = SubResource("BoxMesh_yfw3k")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EnemyPistol"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.018513, 0.601431)
+mesh = SubResource("BoxMesh_ysx3c")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EnemyPistol"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.051006, 0.447047)
+mesh = SubResource("BoxMesh_e3amv")

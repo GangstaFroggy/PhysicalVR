@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://7fxjg37cq50a"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_qe1hv"]
+
+[resource]
+script = ExtResource("1_qe1hv")
+name = "Dropper"
+variables = {
+"agility": 3.0,
+"armor": 30.0,
+"health": 1.0,
+"regen": 0.0,
+"speed": 1.0
+}

@@ -1,0 +1,38 @@
+[gd_scene load_steps=11 format=3 uid="uid://dndhtshkabavo"]
+
+[ext_resource type="Script" path="res://Items/upgrade.gd" id="1_i1khh"]
+[ext_resource type="Resource" uid="uid://c6sfrnawc1cbb" path="res://Items/Aspects/Resources/Base Upgrades/Bubble.tres" id="2_4mn5l"]
+[ext_resource type="Resource" uid="uid://c8x8dhc32pjh1" path="res://Items/Aspects/Resources/Base Upgrades/Ricochet.tres" id="3_hp2aa"]
+[ext_resource type="Resource" uid="uid://bas6ea14kqbng" path="res://Items/Aspects/Resources/Base Upgrades/Trauma.tres" id="4_7sqgu"]
+[ext_resource type="Resource" uid="uid://c8mntl2ql1i3i" path="res://Items/Aspects/Resources/Base Upgrades/Volley.tres" id="5_qc8ny"]
+[ext_resource type="Resource" uid="uid://4ftfuvk0i8k1" path="res://Player/updater.tres" id="6_6eep5"]
+[ext_resource type="Resource" uid="uid://b61731gch83l8" path="res://Items/Aspects/Resources/Base Upgrades/Explosion.tres" id="6_dwghu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dx6mb"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hd4c"]
+shading_mode = 0
+albedo_color = Color(0.913725, 0.815686, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ko07o"]
+material = SubResource("StandardMaterial3D_5hd4c")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="Upgrade" type="Area3D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_i1khh")
+enhancements = Array[Resource("res://Items/Aspects/Scripts/Aspects.gd")]([ExtResource("2_4mn5l"), ExtResource("3_hp2aa"), ExtResource("4_7sqgu"), ExtResource("5_qc8ny"), ExtResource("6_dwghu")])
+updater = ExtResource("6_6eep5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_dx6mb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ko07o")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.198111, 0)
+pixel_size = 0.001
+billboard = 2

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=7 format=3 uid="uid://wjl0rhaag4ab"]
+
+[ext_resource type="PackedScene" uid="uid://80sl0op531m3" path="res://Entity/Enemies/Sergeant.tscn" id="1_n0flf"]
+[ext_resource type="Script" path="res://Entity/Enemies/EnemySpawnInfo.gd" id="2_lwjld"]
+[ext_resource type="PackedScene" uid="uid://c788oejs7hdky" path="res://Entity/Enemies/Unit.tscn" id="3_j8dnk"]
+[ext_resource type="Script" path="res://Entity/WaveInfo.gd" id="4_ayfno"]
+
+[sub_resource type="Resource" id="Resource_fto6y"]
+script = ExtResource("2_lwjld")
+enemy_scene = ExtResource("1_n0flf")
+spawn_rate = 6.0
+player_offset_min = -6.0
+player_offset_max = 6.0
+
+[sub_resource type="Resource" id="Resource_15et0"]
+script = ExtResource("2_lwjld")
+enemy_scene = ExtResource("3_j8dnk")
+spawn_rate = 3.0
+player_offset_min = -4.0
+player_offset_max = 4.0
+
+[resource]
+script = ExtResource("4_ayfno")
+enemies = Array[ExtResource("2_lwjld")]([SubResource("Resource_fto6y"), SubResource("Resource_15et0")])
+duration = 30.0

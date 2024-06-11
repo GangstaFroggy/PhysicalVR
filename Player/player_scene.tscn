@@ -1,0 +1,91 @@
+[gd_scene load_steps=16 format=3 uid="uid://0sd25gfhsqj3"]
+
+[ext_resource type="Script" path="res://Player/PlayerBody.gd" id="1_gmum2"]
+[ext_resource type="Script" path="res://Player/Player.gd" id="2_3hy8q"]
+[ext_resource type="Script" path="res://Player/Player_hitbox.gd" id="2_raghk"]
+[ext_resource type="SphereMesh" uid="uid://dbxsdg2woh7uo" path="res://Player/Hands/HandMesh.tres" id="3_koj60"]
+[ext_resource type="Resource" uid="uid://bpgtdg2mqlovp" path="res://Items/Aspects/Resources/Entity Stats/Player.tres" id="3_w7s4k"]
+[ext_resource type="Script" path="res://Player/Holster.gd" id="3_y25ry"]
+[ext_resource type="Resource" uid="uid://db6s5vc7lox33" path="res://Items/Aspects/Resources/Weapon Stats/Gun.tres" id="4_ei12l"]
+[ext_resource type="PackedScene" uid="uid://kd0dd6miim6b" path="res://Player/Hands/Grab_Area.tscn" id="4_p1l2q"]
+[ext_resource type="Resource" uid="uid://4ftfuvk0i8k1" path="res://Player/updater.tres" id="5_x6agu"]
+[ext_resource type="PackedScene" uid="uid://dvr2cq100jkfc" path="res://Items/gun_scene.tscn" id="7_y08yh"]
+[ext_resource type="Script" path="res://Player/Movement/stick_movement.gd" id="11_04jk5"]
+[ext_resource type="Script" path="res://Player/Movement/jump.gd" id="12_lyp8e"]
+[ext_resource type="Script" path="res://Player/Movement/stick_rotation.gd" id="13_2agih"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fwi5m"]
+radius = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ul7e7"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="PlayerScene" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+script = ExtResource("1_gmum2")
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("2_3hy8q")
+base_aspects = Array[Resource("res://Items/Aspects/Scripts/Aspects.gd")]([ExtResource("4_ei12l"), ExtResource("3_w7s4k")])
+excluded_aspects = Array[String](["health"])
+updater = ExtResource("5_x6agu")
+
+[node name="Holster" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("3_y25ry")
+camera = NodePath("../XROrigin3D/XRCamera3D/Neck")
+
+[node name="Gun" parent="Holster" node_paths=PackedStringArray("holster") instance=ExtResource("7_y08yh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232149, 0.0456354, -0.180069)
+holster = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_fwi5m")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="Neck" type="Node3D" parent="XROrigin3D/XRCamera3D"]
+
+[node name="PlayerHitBox" type="Area3D" parent="XROrigin3D/XRCamera3D/Neck" node_paths=PackedStringArray("player")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_raghk")
+player = NodePath("../../../../Player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRCamera3D/Neck/PlayerHitBox"]
+shape = SubResource("BoxShape3D_ul7e7")
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+pose = &"grip"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = ExtResource("3_koj60")
+
+[node name="GrabArea" parent="XROrigin3D/LeftController" node_paths=PackedStringArray("controllerNode") instance=ExtResource("4_p1l2q")]
+collision_layer = 16
+controllerNode = NodePath("..")
+
+[node name="StickMovementModule" type="Node" parent="XROrigin3D/LeftController" node_paths=PackedStringArray("player")]
+script = ExtResource("11_04jk5")
+player = NodePath("../../../Player")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+pose = &"grip"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = ExtResource("3_koj60")
+
+[node name="GrabArea" parent="XROrigin3D/RightController" node_paths=PackedStringArray("controllerNode") instance=ExtResource("4_p1l2q")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 16
+controllerNode = NodePath("..")
+
+[node name="JumpModule" type="Node" parent="XROrigin3D/RightController" node_paths=PackedStringArray("player")]
+script = ExtResource("12_lyp8e")
+player = NodePath("../../../Player")
+
+[node name="StickRotationModule" type="Node" parent="XROrigin3D/RightController"]
+script = ExtResource("13_2agih")

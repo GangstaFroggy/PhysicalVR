@@ -1,0 +1,138 @@
+[gd_scene load_steps=21 format=3 uid="uid://5edoyi717unc"]
+
+[ext_resource type="Script" path="res://Entity/entity.gd" id="1_7qxdd"]
+[ext_resource type="Resource" uid="uid://dkqpnsknoff4s" path="res://Items/Aspects/Resources/Entity Stats/Dog.tres" id="2_up2e2"]
+[ext_resource type="Script" path="res://Entity/Enemies/StateMachine.gd" id="3_7jraw"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Dog_State.gd" id="3_yprew"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Circle_State.gd" id="4_0emjs"]
+[ext_resource type="Script" path="res://Entity/Enemies/enemy_hitbox.gd" id="4_cxb7i"]
+[ext_resource type="Script" path="res://Entity/Enemies/DogBite.gd" id="4_fuejn"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Retreat_State.gd" id="5_rsgqm"]
+[ext_resource type="Resource" uid="uid://bvosytte7n0pd" path="res://Items/Aspects/Resources/Weapon Stats/DogFangs.tres" id="8_rtc2h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dx2o"]
+size = Vector3(0.401, 1.43582, 1.82604)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlr5d"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0f71"]
+shading_mode = 0
+disable_ambient_light = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgbok"]
+size = Vector3(0.41, 1.44333, 1.81792)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf5xe"]
+shading_mode = 0
+albedo_color = Color(0.823529, 0.411765, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_idnk2"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.42, 0.485, 1.39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ejehh"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.14, 0.505, 0.17)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bllty"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.3, 0.34, 0.73)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h0nhu"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.035, 0.155, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yi422"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.035, 0.155, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ilqs1"]
+size = Vector3(0.4, 2.40225, 0.5)
+
+[node name="Recruit" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 35
+script = ExtResource("1_7qxdd")
+base_stats = ExtResource("2_up2e2")
+
+[node name="StateMachine2" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_7jraw")
+initial_state = NodePath("Retreat_State")
+
+[node name="Charge_State" type="Node" parent="StateMachine2" node_paths=PackedStringArray("weapon")]
+script = ExtResource("3_yprew")
+weapon = NodePath("../../DogFangs")
+
+[node name="Circle_State" type="Node" parent="StateMachine2" node_paths=PackedStringArray("weapon")]
+script = ExtResource("4_0emjs")
+weapon = NodePath("../../DogFangs")
+
+[node name="Retreat_State" type="Node" parent="StateMachine2"]
+script = ExtResource("5_rsgqm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00161743, 0.456481, -0.239144)
+shape = SubResource("BoxShape3D_3dx2o")
+
+[node name="EnemyHitBox" type="Area3D" parent="." node_paths=PackedStringArray("entity", "mesh")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_cxb7i")
+entity = NodePath("..")
+flesh_material = SubResource("StandardMaterial3D_xlr5d")
+armor_material = SubResource("StandardMaterial3D_b0f71")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.452754, -0.218751)
+shape = SubResource("BoxShape3D_dgbok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460022, 0)
+mesh = SubResource("BoxMesh_idnk2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.133, -0.017, -0.428)
+mesh = SubResource("BoxMesh_ejehh")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132867, -0.017, -0.428)
+mesh = SubResource("BoxMesh_ejehh")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, -0.017, 0.549)
+mesh = SubResource("BoxMesh_ejehh")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.124913, -0.0168399, 0.548864)
+mesh = SubResource("BoxMesh_ejehh")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.844021, -0.779236)
+mesh = SubResource("BoxMesh_bllty")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119, 1.093, -0.591)
+mesh = SubResource("BoxMesh_h0nhu")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11942, 1.09303, -0.590739)
+mesh = SubResource("BoxMesh_yi422")
+
+[node name="DogFangs" type="Node3D" parent="." node_paths=PackedStringArray("area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.775083)
+script = ExtResource("4_fuejn")
+area = NodePath("Area3D")
+stats = ExtResource("8_rtc2h")
+
+[node name="Area3D" type="Area3D" parent="DogFangs"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DogFangs/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.951126, -0.616068)
+shape = SubResource("BoxShape3D_ilqs1")

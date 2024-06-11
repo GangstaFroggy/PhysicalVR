@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://c8x8dhc32pjh1"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_brsha"]
+
+[resource]
+script = ExtResource("1_brsha")
+name = "Ricochet"
+variables = {
+"ricochets": 1.0
+}

@@ -1,0 +1,120 @@
+[gd_scene load_steps=21 format=3 uid="uid://c788oejs7hdky"]
+
+[ext_resource type="Script" path="res://Entity/entity.gd" id="1_ogpy1"]
+[ext_resource type="Resource" uid="uid://bhn7oqq7i0fb8" path="res://Items/Aspects/Resources/Entity Stats/Recruit.tres" id="2_fqtxl"]
+[ext_resource type="Script" path="res://Entity/Enemies/StateMachine.gd" id="3_bfckd"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Recruit_State.gd" id="3_gpysy"]
+[ext_resource type="Script" path="res://Entity/Enemies/enemy_hitbox.gd" id="3_o1x6g"]
+[ext_resource type="Resource" uid="uid://bqrir4d3j0r6y" path="res://Items/Aspects/Resources/Weapon Stats/RecruitGun.tres" id="7_hool1"]
+[ext_resource type="PackedScene" uid="uid://bkdoqjlh5e2wo" path="res://Entity/Enemies/Enemy Weapons/enemy_pistol.tscn" id="9_sm8c0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hx0k3"]
+radius = 0.243162
+height = 1.34431
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlr5d"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0f71"]
+shading_mode = 0
+disable_ambient_light = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgbok"]
+size = Vector3(0.5, 1.28333, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf5xe"]
+shading_mode = 0
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_idnk2"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.35, 1.22, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vto62"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.375, 0.12, 0.415)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x1i8a"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.24, 0.085, 0.21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lcxhd"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.14, 0.05, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1aemn"]
+shading_mode = 0
+albedo_color = Color(0.403922, 0.403922, 0.403922, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nr7jx"]
+material = SubResource("StandardMaterial3D_1aemn")
+size = Vector3(0.035, 0.04, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugoto"]
+shading_mode = 0
+albedo_color = Color(0.329412, 0.121569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0mgwc"]
+material = SubResource("StandardMaterial3D_ugoto")
+size = Vector3(0.03, 0.1, 0.04)
+
+[node name="Recruit" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_ogpy1")
+base_stats = ExtResource("2_fqtxl")
+
+[node name="StateMachine2" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_bfckd")
+initial_state = NodePath("Recruit_State")
+
+[node name="Recruit_State" type="Node" parent="StateMachine2" node_paths=PackedStringArray("weapon")]
+script = ExtResource("3_gpysy")
+weapon = NodePath("../../EnemyPistol")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hx0k3")
+
+[node name="EnemyHitBox" type="Area3D" parent="." node_paths=PackedStringArray("entity", "mesh")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_o1x6g")
+entity = NodePath("..")
+flesh_material = SubResource("StandardMaterial3D_xlr5d")
+armor_material = SubResource("StandardMaterial3D_b0f71")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141663, 0)
+shape = SubResource("BoxShape3D_dgbok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00723305, 0)
+mesh = SubResource("BoxMesh_idnk2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.604635, -0.125314)
+mesh = SubResource("BoxMesh_vto62")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.557042, 0.126077)
+mesh = SubResource("BoxMesh_x1i8a")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.558486, 0.290311)
+mesh = SubResource("BoxMesh_lcxhd")
+
+[node name="EnemyPistol" parent="." instance=ExtResource("9_sm8c0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.195897, 0.0613938, -0.223943)
+stats = ExtResource("7_hool1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyPistol"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00281045, 0.117699)
+mesh = SubResource("BoxMesh_nr7jx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EnemyPistol"]
+transform = Transform3D(1, 0, 0, 0, 0.990268, 0.139173, 0, -0.139173, 0.990268, 0, -0.0468213, 0.177074)
+mesh = SubResource("BoxMesh_0mgwc")

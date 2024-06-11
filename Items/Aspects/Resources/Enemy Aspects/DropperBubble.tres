@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://botxa07gk36my"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_4lrlu"]
+
+[resource]
+script = ExtResource("1_4lrlu")
+name = "Bubble"
+variables = {
+"bubble duration": 10.0,
+"bubble radius": 3.0,
+"bubble tick": 1.0,
+"bubble tick damage": 3.0
+}

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://db6s5vc7lox33"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_k5fyw"]
+
+[resource]
+script = ExtResource("1_k5fyw")
+name = "Gun"
+variables = {
+"damage": 10.0,
+"duration": 2.0,
+"fire rate": 2.0,
+"velocity": 10.0
+}

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv4hkrfhboj7x"]
+
+[ext_resource type="Script" path="res://Stat_Sheet.gd" id="1_p0nqe"]
+
+[node name="Label3D" type="Label3D"]
+pixel_size = 0.001
+text = "Stat Buffs:
+"
+font_size = 68
+horizontal_alignment = 0
+script = ExtResource("1_p0nqe")

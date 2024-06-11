@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=7 format=3 uid="uid://dj0cmfkv7nyms"]
+
+[ext_resource type="PackedScene" uid="uid://5edoyi717unc" path="res://Entity/Enemies/Dog.tscn" id="1_bfv8t"]
+[ext_resource type="Script" path="res://Entity/Enemies/EnemySpawnInfo.gd" id="2_2yoii"]
+[ext_resource type="PackedScene" uid="uid://c6ctnoxwgy8v3" path="res://Entity/Enemies/Dropper.tscn" id="3_rxsug"]
+[ext_resource type="Script" path="res://Entity/WaveInfo.gd" id="4_vlnad"]
+
+[sub_resource type="Resource" id="Resource_xv1jc"]
+script = ExtResource("2_2yoii")
+enemy_scene = ExtResource("1_bfv8t")
+spawn_rate = 4.5
+player_offset_min = -6.0
+player_offset_max = 6.0
+
+[sub_resource type="Resource" id="Resource_rcdjw"]
+script = ExtResource("2_2yoii")
+enemy_scene = ExtResource("3_rxsug")
+spawn_rate = 4.0
+player_offset_min = -5.0
+player_offset_max = 5.0
+
+[resource]
+script = ExtResource("4_vlnad")
+enemies = Array[ExtResource("2_2yoii")]([SubResource("Resource_xv1jc"), SubResource("Resource_rcdjw")])
+duration = 30.0

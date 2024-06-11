@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=9 format=3 uid="uid://dbc4rqt7iwhrc"]
+
+[ext_resource type="PackedScene" uid="uid://c788oejs7hdky" path="res://Entity/Enemies/Unit.tscn" id="1_deayp"]
+[ext_resource type="Script" path="res://Entity/Enemies/EnemySpawnInfo.gd" id="2_xr65o"]
+[ext_resource type="PackedScene" uid="uid://c6ctnoxwgy8v3" path="res://Entity/Enemies/Dropper.tscn" id="3_rsj8x"]
+[ext_resource type="Script" path="res://Entity/WaveInfo.gd" id="4_o5pl6"]
+[ext_resource type="PackedScene" uid="uid://dnwaw4ixw57mx" path="res://Entity/Enemies/Rocketeer.tscn" id="4_qhpw3"]
+
+[sub_resource type="Resource" id="Resource_xv1jc"]
+script = ExtResource("2_xr65o")
+enemy_scene = ExtResource("1_deayp")
+spawn_rate = 3.0
+player_offset_min = -6.0
+player_offset_max = 6.0
+
+[sub_resource type="Resource" id="Resource_qutbg"]
+script = ExtResource("2_xr65o")
+enemy_scene = ExtResource("3_rsj8x")
+spawn_rate = 4.0
+player_offset_min = -5.0
+player_offset_max = 5.0
+
+[sub_resource type="Resource" id="Resource_tcxjx"]
+script = ExtResource("2_xr65o")
+enemy_scene = ExtResource("4_qhpw3")
+spawn_rate = 4.0
+player_offset_min = -6.0
+player_offset_max = 6.0
+
+[resource]
+script = ExtResource("4_o5pl6")
+enemies = Array[ExtResource("2_xr65o")]([SubResource("Resource_xv1jc"), SubResource("Resource_qutbg"), SubResource("Resource_tcxjx")])
+duration = 30.0

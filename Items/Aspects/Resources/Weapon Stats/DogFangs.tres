@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://bvosytte7n0pd"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_4ff0q"]
+
+[resource]
+script = ExtResource("1_4ff0q")
+name = "Dog Fangs"
+variables = {
+"cooldown": 7.0,
+"damage": 5.0
+}

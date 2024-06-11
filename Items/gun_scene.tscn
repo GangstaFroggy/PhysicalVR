@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvr2cq100jkfc"]
+
+[ext_resource type="Script" path="res://Items/grabbable_node.gd" id="1_8rmnk"]
+[ext_resource type="Script" path="res://Items/gun_trigger.gd" id="2_021uv"]
+[ext_resource type="Resource" uid="uid://4ftfuvk0i8k1" path="res://Player/updater.tres" id="3_p4q6k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78fuv"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_m5ibs"]
+material = SubResource("StandardMaterial3D_78fuv")
+radius = 0.1
+height = 0.2
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xo1e4"]
+size = Vector3(0.0400077, 0.202835, 0.122936)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8ea3"]
+shading_mode = 0
+albedo_color = Color(0.235294, 0.145098, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_02vah"]
+material = SubResource("StandardMaterial3D_s8ea3")
+size = Vector3(0.03, 0.04, 0.09)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h75xj"]
+shading_mode = 0
+albedo_color = Color(1, 0.6, 0.152941, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2t71j"]
+material = SubResource("StandardMaterial3D_h75xj")
+size = Vector3(0.04, 0.2, 0.05)
+
+[node name="Gun" type="Node3D"]
+script = ExtResource("1_8rmnk")
+
+[node name="TriggerGrip" type="Area3D" parent="." node_paths=PackedStringArray("muzzle", "snapPoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.114929, -0.0358318)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_021uv")
+muzzle = NodePath("../Muzzle")
+bullet_mesh = SubResource("SphereMesh_m5ibs")
+updater = ExtResource("3_p4q6k")
+snapPoint = NodePath("../Node3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerGrip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000287682, 0.0499961, 0.0200531)
+shape = SubResource("BoxShape3D_xo1e4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_02vah")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0649166, -0.0504202)
+mesh = SubResource("BoxMesh_2t71j")
+
+[node name="Node3D" type="Node3D" parent="." groups=["GripPoint"]]
+
+[node name="Muzzle" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.172065, -0.0542636)

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd274btb1825i"]
+
+[ext_resource type="Script" path="res://Levels/level_door.gd" id="1_dwhtc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2f0ar"]
+size = Vector3(0.6, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nawmu"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pv100"]
+material = SubResource("StandardMaterial3D_nawmu")
+size = Vector3(0.6, 2, 0.1)
+
+[node name="LevelDoor" type="Area3D"]
+collision_mask = 2
+script = ExtResource("1_dwhtc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2f0ar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_pv100")
+skeleton = NodePath("../CollisionShape3D")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

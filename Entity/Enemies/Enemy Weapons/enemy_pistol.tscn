@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkdoqjlh5e2wo"]
+
+[ext_resource type="Script" path="res://Entity/Enemies/Enemy Weapons/enemy_gun.gd" id="1_hcqjd"]
+[ext_resource type="Resource" uid="uid://db6s5vc7lox33" path="res://Items/Aspects/Resources/Weapon Stats/Gun.tres" id="2_n56ek"]
+[ext_resource type="SphereMesh" uid="uid://bvvdgvdixohi3" path="res://Entity/Enemies/Enemy Weapons/enemy_bullet.tres" id="3_ikqn0"]
+
+[node name="EnemyPistol" type="Node3D" node_paths=PackedStringArray("muzzle")]
+script = ExtResource("1_hcqjd")
+stats = ExtResource("2_n56ek")
+muzzle = NodePath("Node3D")
+bullet_mesh = ExtResource("3_ikqn0")
+
+[node name="Node3D" type="Node3D" parent="."]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://bas6ea14kqbng"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_spur5"]
+
+[resource]
+script = ExtResource("1_spur5")
+name = "Trauma"
+variables = {
+"trauma tick": 3.0,
+"trauma tick damage": 2.0
+}

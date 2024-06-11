@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://b61731gch83l8"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_pt41u"]
+
+[resource]
+script = ExtResource("1_pt41u")
+name = "Explosion"
+variables = {
+"explosion damage": 10.0,
+"explosion radius": 1.0
+}

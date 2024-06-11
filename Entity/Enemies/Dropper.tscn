@@ -1,0 +1,98 @@
+[gd_scene load_steps=19 format=3 uid="uid://c6ctnoxwgy8v3"]
+
+[ext_resource type="Script" path="res://Entity/entity.gd" id="1_eei3k"]
+[ext_resource type="Resource" uid="uid://7fxjg37cq50a" path="res://Items/Aspects/Resources/Entity Stats/Dropper.tres" id="2_x70h8"]
+[ext_resource type="Script" path="res://Entity/Enemies/StateMachine.gd" id="3_5f421"]
+[ext_resource type="Script" path="res://Entity/Enemies/States/Dropper_State.gd" id="4_m66i4"]
+[ext_resource type="Script" path="res://Entity/Enemies/enemy_hitbox.gd" id="5_d06hl"]
+[ext_resource type="Script" path="res://Entity/Enemies/Enemy Weapons/enemy_gun.gd" id="6_d4jnj"]
+[ext_resource type="Resource" uid="uid://doms3wrpop3wv" path="res://Items/Aspects/Resources/Weapon Stats/Launcher.tres" id="7_7qom4"]
+[ext_resource type="SphereMesh" uid="uid://bvvdgvdixohi3" path="res://Entity/Enemies/Enemy Weapons/enemy_bullet.tres" id="8_leghw"]
+[ext_resource type="Resource" uid="uid://botxa07gk36my" path="res://Items/Aspects/Resources/Enemy Aspects/DropperBubble.tres" id="9_rkqcu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hx0k3"]
+radius = 0.2
+height = 0.557751
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlr5d"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0f71"]
+shading_mode = 0
+disable_ambient_light = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgbok"]
+size = Vector3(0.875488, 0.5, 0.673828)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf5xe"]
+shading_mode = 0
+albedo_color = Color(0.964706, 0.819608, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_idnk2"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.4, 0.4, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d8ypi"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(1, 0.1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q7eba"]
+shading_mode = 0
+albedo_color = Color(1, 0.466667, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r6i52"]
+material = SubResource("StandardMaterial3D_q7eba")
+size = Vector3(0.1, 0.1, 0.4)
+
+[node name="Dropper" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 35
+script = ExtResource("1_eei3k")
+base_stats = ExtResource("2_x70h8")
+
+[node name="StateMachine2" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_5f421")
+initial_state = NodePath("Dropper_State")
+
+[node name="Dropper_State" type="Node" parent="StateMachine2" node_paths=PackedStringArray("launcher")]
+script = ExtResource("4_m66i4")
+launcher = NodePath("../../EnemyGun")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hx0k3")
+
+[node name="EnemyHitBox" type="Area3D" parent="." node_paths=PackedStringArray("entity", "mesh")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_d06hl")
+entity = NodePath("..")
+flesh_material = SubResource("StandardMaterial3D_xlr5d")
+armor_material = SubResource("StandardMaterial3D_b0f71")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EnemyHitBox"]
+shape = SubResource("BoxShape3D_dgbok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHitBox"]
+mesh = SubResource("BoxMesh_idnk2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10271, 0)
+mesh = SubResource("BoxMesh_d8ypi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="EnemyHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0596955, -0.249543)
+mesh = SubResource("BoxMesh_r6i52")
+
+[node name="EnemyGun" type="Node3D" parent="." node_paths=PackedStringArray("muzzle")]
+script = ExtResource("6_d4jnj")
+stats = ExtResource("7_7qom4")
+muzzle = NodePath("Node3D")
+bullet_mesh = ExtResource("8_leghw")
+aspects = Array[Resource("res://Items/Aspects/Scripts/Aspects.gd")]([ExtResource("9_rkqcu")])
+
+[node name="Node3D" type="Node3D" parent="EnemyGun"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.320354, 0)

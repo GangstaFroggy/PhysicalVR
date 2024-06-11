@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://doms3wrpop3wv"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_rs35c"]
+
+[resource]
+script = ExtResource("1_rs35c")
+name = "Launcher"
+variables = {
+"damage": 5.0,
+"duration": 5.0,
+"fire rate": 0.3,
+"velocity": 5.0
+}

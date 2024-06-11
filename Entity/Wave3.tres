@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=5 format=3 uid="uid://bbth77c8l6lxh"]
+
+[ext_resource type="Script" path="res://Entity/WaveInfo.gd" id="1_ieyhu"]
+[ext_resource type="PackedScene" uid="uid://c788oejs7hdky" path="res://Entity/Enemies/Unit.tscn" id="1_tmins"]
+[ext_resource type="Script" path="res://Entity/Enemies/EnemySpawnInfo.gd" id="2_40cwj"]
+
+[sub_resource type="Resource" id="Resource_msbtt"]
+script = ExtResource("2_40cwj")
+enemy_scene = ExtResource("1_tmins")
+spawn_rate = 5.0
+player_offset_min = -5.0
+player_offset_max = 5.0
+
+[resource]
+script = ExtResource("1_ieyhu")
+enemies = Array[ExtResource("2_40cwj")]([SubResource("Resource_msbtt")])
+duration = 30.0

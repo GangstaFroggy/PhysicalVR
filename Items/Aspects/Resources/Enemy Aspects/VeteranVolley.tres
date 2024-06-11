@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Aspect" load_steps=2 format=3 uid="uid://di54jjw26sjvv"]
+
+[ext_resource type="Script" path="res://Items/Aspects/Scripts/Aspects.gd" id="1_seqts"]
+
+[resource]
+script = ExtResource("1_seqts")
+name = "Volley"
+variables = {
+"grouping": 15.0,
+"projectiles": 8.0
+}

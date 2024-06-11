@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Physical Vr"
+run/main_scene="res://Levels/Hub/Hub.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+
+[filesystem]
+
+import/blender/enabled=false
+
+[layer_names]
+
+3d_physics/layer_1="walkable"
+3d_physics/layer_2="entities"
+3d_physics/layer_3="pickup"
+3d_physics/layer_4="hitbox"
+3d_physics/layer_5="hands"
+3d_physics/layer_6="non-walkable"
+
+[rendering]
+
+shading/overrides/force_vertex_shading=true
+shading/overrides/force_lambert_over_burley=true
+vrs/mode=2
+
+[xr]
+
+openxr/enabled=true
+openxr/submit_depth_buffer=true
+openxr/extensions/hand_tracking=false
+shaders/enabled=true

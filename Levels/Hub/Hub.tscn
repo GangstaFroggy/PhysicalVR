@@ -1,0 +1,99 @@
+[gd_scene load_steps=15 format=3 uid="uid://cmtka0unf3p1o"]
+
+[ext_resource type="Script" path="res://Levels/Hub/Hub.gd" id="1_8dgk5"]
+[ext_resource type="PackedScene" uid="uid://0sd25gfhsqj3" path="res://Player/player_scene.tscn" id="2_f5417"]
+[ext_resource type="PackedScene" uid="uid://bd274btb1825i" path="res://Levels/LevelDoor.tscn" id="3_y6d5m"]
+[ext_resource type="PackedScene" uid="uid://cv4hkrfhboj7x" path="res://Levels/Stat_Buff_Board.tscn" id="4_rvn2a"]
+[ext_resource type="PackedScene" uid="uid://b6gocnn8njpnf" path="res://Levels/Buttons/reset_button.tscn" id="5_ypb2g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n5mpu"]
+size = Vector3(5, 0.2, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8iwex"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y2ksl"]
+material = SubResource("StandardMaterial3D_8iwex")
+size = Vector3(5, 0.2, 5)
+
+[sub_resource type="Environment" id="Environment_x0puv"]
+background_mode = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6cymt"]
+size = Vector3(1, 6.83588, 4.99634)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pm2rh"]
+size = Vector3(5.00684, 6.82568, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ohnur"]
+size = Vector3(1, 6.82568, 5.00659)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c462u"]
+size = Vector3(5.01752, 6.815, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yr8aq"]
+size = Vector3(5.03195, 1, 5.03198)
+
+[node name="Main" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_8dgk5")
+player = NodePath("PlayerBody")
+
+[node name="PlayerBody" parent="." instance=ExtResource("2_f5417")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08494, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_n5mpu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_y2ksl")
+
+[node name="LevelDoor" parent="." instance=ExtResource("3_y6d5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10449, -2.40466)
+
+[node name="Label3D" parent="." instance=ExtResource("4_rvn2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63051, 2.03071, -2.43016)
+
+[node name="Button" parent="." instance=ExtResource("5_ypb2g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7123, 1.23903, -2.28368)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x0puv")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.01192, 2.91794, 0.0045166)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_6cymt")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000488281, 2.91284, 3.01241)
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D3"]
+shape = SubResource("BoxShape3D_pm2rh")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01241, 2.91284, -0.00598145)
+collision_mask = 0
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D4"]
+shape = SubResource("BoxShape3D_ohnur")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00479126, 2.9075, -3.01241)
+collision_mask = 0
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D5"]
+shape = SubResource("BoxShape3D_c462u")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00691223, 6.82945, 0.0145264)
+collision_mask = 0
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D6"]
+shape = SubResource("BoxShape3D_yr8aq")

@@ -1,0 +1,168 @@
+[gd_scene load_steps=15 format=3 uid="uid://c788oejs7hdky"]
+
+[ext_resource type="Script" path="res://Entity/entity.gd" id="1_ogpy1"]
+[ext_resource type="Resource" uid="uid://bem3jv1qh2u0h" path="res://Entity/Enemies/Unit_Stats.tres" id="2_bhmya"]
+[ext_resource type="Script" path="res://Entity/Enemies/enemy_hitbox.gd" id="3_o1x6g"]
+[ext_resource type="Script" path="res://Entity/Enemies/Shoot_State.gd" id="8_hs2tn"]
+[ext_resource type="Script" path="res://Entity/Enemies/Chase_State.gd" id="9_8dl1o"]
+[ext_resource type="PackedScene" uid="uid://bkdoqjlh5e2wo" path="res://Entity/Enemies/Enemy Weapons/enemy_pistol.tscn" id="9_sm8c0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hx0k3"]
+radius = 0.2
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlr5d"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0f71"]
+shading_mode = 0
+disable_ambient_light = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgbok"]
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf5xe"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_idnk2"]
+material = SubResource("StandardMaterial3D_hf5xe")
+size = Vector3(0.5, 1, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rdosl"]
+radius = 5.0
+
+[sub_resource type="GDScript" id="GDScript_6rtfd"]
+script/source = "extends Node
+class_name StateMachine
+@export var collision : CollisionShape3D
+@export var initial_state : State
+@export var head : Node3D
+@export var hand : Node3D
+@export var sight_distance : float
+@export var sight_angle : float
+@onready var body : CharacterBody3D = get_parent()
+@onready var entity_main : Node3D = get_parent().get_parent()
+@onready var current_state : State
+var enemies : Array[Node] = []
+var player : Node3D = null
+var seen_player : bool = false
+
+func _ready():
+	current_state = initial_state
+	current_state.transition.connect(on_transition)
+	
+
+func _physics_process(delta):
+	#Filter thorugh all entities and sort them as either a player or an enemy
+	enemies = []
+	for entity in entity_main.get_children():
+		if entity.is_in_group(\"player\"):
+			if can_see(entity):
+				seen_player = true
+			else:
+				seen_player = false
+			player = entity
+		else:
+			enemies.append(entity)
+	
+	current_state.process_physics(delta)
+
+func on_transition(new_state):
+	#call exit on old state / switch current state to new state / call enter on new state
+	current_state.exit()
+	current_state.transition.disconnect(on_transition)
+	current_state = find_child(new_state)
+	current_state.transition.connect(on_transition)
+	current_state.enter()
+
+func can_see(player : Node3D):
+	if body.global_position.distance_to(player.global_position) > sight_distance:
+		return false
+	else:
+		var space_state = body.get_world_3d().direct_space_state
+		var head_query = PhysicsRayQueryParameters3D.create(head.global_position, player.global_position ,0b100011)
+		head_query.hit_from_inside = true
+		var head_result = space_state.intersect_ray(head_query)
+		var hand_query = PhysicsRayQueryParameters3D.create(hand.global_position, player.global_position ,0b100011)
+		hand_query.hit_from_inside = true
+		var hand_result = space_state.intersect_ray(hand_query)
+		if head_result && hand_result && head_result.collider == player && hand_result.collider == player:
+			var head_direction = -head.global_transform.basis.z.normalized()
+			var direction_to_player = head.global_position.direction_to(player.global_position).normalized()
+			var angle_to_player = direction_to_player.dot(head_direction)
+			
+			if angle_to_player > sight_angle:
+				return true
+			else:
+				return false
+		else:
+			return false
+"
+
+[node name="Entity" type="CharacterBody3D"]
+collision_layer = 16
+collision_mask = 33
+script = ExtResource("1_ogpy1")
+stats = ExtResource("2_bhmya")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hx0k3")
+
+[node name="EnemyHitBox" type="Area3D" parent="." node_paths=PackedStringArray("mesh", "entity")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_o1x6g")
+flesh_material = SubResource("StandardMaterial3D_xlr5d")
+armor_material = SubResource("StandardMaterial3D_b0f71")
+mesh = NodePath("MeshInstance3D")
+entity = NodePath("..")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EnemyHitBox"]
+shape = SubResource("BoxShape3D_dgbok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHitBox"]
+mesh = SubResource("BoxMesh_idnk2")
+skeleton = NodePath("")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.323296, 0)
+
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.311341, 0, -0.344924)
+
+[node name="EnemyPistol" parent="Hand" instance=ExtResource("9_sm8c0")]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -1)
+collision_mask = 33
+hit_from_inside = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_rdosl")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("collision", "initial_state", "head", "hand")]
+script = SubResource("GDScript_6rtfd")
+collision = NodePath("../CollisionShape3D")
+initial_state = NodePath("Chase_State")
+head = NodePath("../Head")
+hand = NodePath("../Hand")
+sight_distance = 100.0
+sight_angle = -0.1
+
+[node name="Chase_State" type="Node" parent="StateMachine" node_paths=PackedStringArray("pistol", "sense_sphere")]
+script = ExtResource("9_8dl1o")
+pistol = NodePath("../../Hand/EnemyPistol")
+sense_sphere = NodePath("../../Area3D")
+speed = 2.0
+
+[node name="Shoot_State" type="Node" parent="StateMachine" node_paths=PackedStringArray("hand", "sense_sphere")]
+script = ExtResource("8_hs2tn")
+hand = NodePath("../../Hand")
+sense_sphere = NodePath("../../Area3D")
+speed = 2.0

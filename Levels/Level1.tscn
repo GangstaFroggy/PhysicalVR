@@ -1,0 +1,153 @@
+[gd_scene load_steps=33 format=3 uid="uid://7fs5mamncaw4"]
+
+[ext_resource type="Script" path="res://Levels/level.gd" id="1_edgfg"]
+[ext_resource type="PackedScene" uid="uid://cv4hkrfhboj7x" path="res://Levels/Stat_Buff_Board.tscn" id="2_ks7bh"]
+[ext_resource type="PackedScene" uid="uid://cff2g4vjwnlef" path="res://Levels/Buttons/returnmenu_button.tscn" id="3_j5oh8"]
+[ext_resource type="Resource" uid="uid://fecoc8cjc8jo" path="res://Entity/Wave1.tres" id="3_nbxh7"]
+[ext_resource type="Script" path="res://Navigation/WaveManager.gd" id="3_p51x8"]
+[ext_resource type="Resource" uid="uid://divu1vnxw6pul" path="res://Entity/Wave2.tres" id="4_3lwvt"]
+[ext_resource type="PackedScene" uid="uid://0sd25gfhsqj3" path="res://Player/player_scene.tscn" id="5_w0ia4"]
+[ext_resource type="Resource" uid="uid://bbth77c8l6lxh" path="res://Entity/Wave3.tres" id="5_x4eu2"]
+[ext_resource type="Resource" uid="uid://8lmf4keh7oj2" path="res://Entity/Wave4.tres" id="8_kw7yt"]
+[ext_resource type="Resource" uid="uid://djplt07fokvpi" path="res://Entity/Wave5.tres" id="9_c47pk"]
+[ext_resource type="Resource" uid="uid://cosjevnrwctvc" path="res://Entity/Wave6.tres" id="10_se6tb"]
+[ext_resource type="Resource" uid="uid://dj0cmfkv7nyms" path="res://Entity/Wave7.tres" id="11_am8kk"]
+[ext_resource type="Resource" uid="uid://dbwe8pbdvafjk" path="res://Entity/Wave8.tres" id="12_dj66h"]
+[ext_resource type="Resource" uid="uid://dnc2l4yonmbvf" path="res://Entity/Wave9.tres" id="13_a00ky"]
+[ext_resource type="Resource" uid="uid://wjl0rhaag4ab" path="res://Entity/Wave10.tres" id="14_6pq3m"]
+[ext_resource type="Resource" uid="uid://dpbnkwx7d0pea" path="res://Entity/Wave11.tres" id="15_4nw8e"]
+[ext_resource type="Resource" uid="uid://2idalsges728" path="res://Entity/Wave12.tres" id="16_4dwm1"]
+[ext_resource type="Resource" uid="uid://crl6x64f3yy0w" path="res://Entity/Wave13.tres" id="17_es1ni"]
+[ext_resource type="Resource" uid="uid://clqxuo0hnxpla" path="res://Entity/Wave14.tres" id="18_b2od3"]
+[ext_resource type="Resource" uid="uid://0qlfe4w16ga5" path="res://Entity/Wave15.tres" id="19_h1scl"]
+[ext_resource type="Resource" uid="uid://dbc4rqt7iwhrc" path="res://Entity/Wave16.tres" id="20_wqhu3"]
+[ext_resource type="Resource" uid="uid://ge7q4gi87o25" path="res://Entity/Wave17.tres" id="21_746j8"]
+[ext_resource type="Resource" uid="uid://cw3dip0jel8k1" path="res://Entity/Wave18.tres" id="22_rr7gc"]
+[ext_resource type="Resource" uid="uid://dfh6pljkda8uh" path="res://Entity/Wave19.tres" id="23_1wj6c"]
+[ext_resource type="Resource" uid="uid://ddm7dnetooerd" path="res://Entity/Wave20.tres" id="24_yi2xq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5feyt"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ddkm"]
+shading_mode = 0
+albedo_color = Color(0.282353, 0.137255, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pan1j"]
+material = SubResource("StandardMaterial3D_8ddkm")
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqnwf"]
+shading_mode = 0
+albedo_color = Color(0.345098, 0.345098, 0.345098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jqe8v"]
+material = SubResource("StandardMaterial3D_lqnwf")
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="Environment" id="Environment_puurk"]
+background_mode = 1
+background_color = Color(0.478431, 0.643137, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7hyss"]
+size = Vector3(20.0099, 1, 19.9739)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_edgfg")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22923, 0)
+
+[node name="Node3D2" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78664, 1.22923, 0.970297)
+
+[node name="Node3D3" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.787, 1.229, -0.97)
+
+[node name="Label3D" type="Label3D" parent="Environment"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.70756, 8.47812, 0)
+text = "Wave 1"
+font_size = 400
+outline_size = 50
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+shape = SubResource("BoxShape3D_5feyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D"]
+mesh = SubResource("BoxMesh_pan1j")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 10)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D2"]
+shape = SubResource("BoxShape3D_5feyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D2"]
+mesh = SubResource("BoxMesh_jqe8v")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 10, 10, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D3"]
+shape = SubResource("BoxShape3D_5feyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D3"]
+mesh = SubResource("BoxMesh_jqe8v")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -10, 10, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D4"]
+shape = SubResource("BoxShape3D_5feyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D4"]
+mesh = SubResource("BoxMesh_jqe8v")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, -10)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D5"]
+shape = SubResource("BoxShape3D_5feyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D5"]
+mesh = SubResource("BoxMesh_jqe8v")
+
+[node name="Label3D2" parent="Environment" instance=ExtResource("2_ks7bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40939, 2.2681, -1.22631)
+visible = false
+
+[node name="Button" parent="Environment" instance=ExtResource("3_j5oh8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.3455, 1.27592, 2.20421)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_puurk")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.49, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00726318, 0, 0.00012207)
+shape = SubResource("BoxShape3D_7hyss")
+
+[node name="WaveManager" type="Node3D" parent="." node_paths=PackedStringArray("player", "upgrade_points", "wave_counter", "stat_board", "return_button")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04863, 0)
+script = ExtResource("3_p51x8")
+player = NodePath("PlayerBody")
+wave_list = Array[Resource("res://Entity/WaveInfo.gd")]([ExtResource("3_nbxh7"), ExtResource("4_3lwvt"), ExtResource("5_x4eu2"), ExtResource("8_kw7yt"), ExtResource("9_c47pk"), ExtResource("10_se6tb"), ExtResource("11_am8kk"), ExtResource("12_dj66h"), ExtResource("13_a00ky"), ExtResource("14_6pq3m"), ExtResource("15_4nw8e"), ExtResource("16_4dwm1"), ExtResource("17_es1ni"), ExtResource("18_b2od3"), ExtResource("19_h1scl"), ExtResource("20_wqhu3"), ExtResource("21_746j8"), ExtResource("22_rr7gc"), ExtResource("23_1wj6c"), ExtResource("24_yi2xq")])
+upgrade_points = [NodePath("../Environment/Node3D"), NodePath("../Environment/Node3D2"), NodePath("../Environment/Node3D3")]
+wave_counter = NodePath("../Environment/Label3D")
+stat_board = NodePath("../Environment/Label3D2")
+return_button = NodePath("../Environment/Button")
+
+[node name="PlayerBody" parent="WaveManager" instance=ExtResource("5_w0ia4")]
+transform = Transform3D(-0.13326, 0, -0.991081, 0, 1, 0, 0.991081, 0, -0.13326, -5.05757, -0.793843, 0.229892)
